@@ -36,7 +36,7 @@ class HomeScreen extends StatelessWidget {
           // White Overlay
           Positioned.fill(
             child: Container(
-              color: Colors.white.withOpacity(0.18),
+              color: Colors.white.withValues(alpha: 0.18),
             ),
           ),
 
