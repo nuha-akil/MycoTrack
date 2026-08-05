@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mycotrack/screens/capture_skin/capture_skin_screen.dart';
 import 'package:mycotrack/screens/upload_existing_image/upload_existing_image_screen.dart';
+import 'package:mycotrack/screens/history/view_past_results_screen.dart';
+import 'package:mycotrack/screens/profile/profile_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -77,6 +79,7 @@ class HomeScreen extends StatelessWidget {
                       alignment: Alignment.topLeft,
                       child: Column(
                         children: [
+                          // Upload Existing Image
                           menuButton(
                             context,
                             Icons.image_outlined,
@@ -94,6 +97,7 @@ class HomeScreen extends StatelessWidget {
 
                           const SizedBox(height: 18),
 
+                          // Capture Skin Image
                           menuButton(
                             context,
                             Icons.camera_alt_outlined,
@@ -111,20 +115,38 @@ class HomeScreen extends StatelessWidget {
 
                           const SizedBox(height: 18),
 
+                          // View Past Result
                           menuButton(
                             context,
                             Icons.remove_red_eye_outlined,
                             "View Past\nResult",
-                                () {},
+                                () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                  const ViewPastResultsScreen(),
+                                ),
+                              );
+                            },
                           ),
 
                           const SizedBox(height: 18),
 
+                          // Profile
                           menuButton(
                             context,
                             Icons.person_outline,
                             "Profile",
-                                () {},
+                                () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                  const ProfileScreen(),
+                                ),
+                              );
+                            },
                           ),
                         ],
                       ),

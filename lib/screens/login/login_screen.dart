@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../home/home_screen.dart';
 import '../auth/forgot_password_screen.dart';
-import '../new account/create_new_account_screen.dart';
+import '../new_account/create_new_account_screen.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
