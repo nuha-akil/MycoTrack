@@ -6,6 +6,7 @@ function isValidEmail(email) {
   return emailPattern.test(email);
 }
 
+//Create new account control
 async function registerUser(req, res) {
   try {
     const email =
@@ -134,6 +135,81 @@ async function registerUser(req, res) {
   }
 }
 
+//Login Control
+async function loginUser(req, res) {
+  try {
+    const username =
+      typeof req.body.username === "string"
+        ? req.body.username.trim()
+        : "";
+
+    const password =
+      typeof req.body.password === "string"
+        ? req.body.password
+        : "";
+
+    if (!username || !password) {
+      return res.status(400).json({
+        success: false,
+        message: "Username and password are required",
+      });
+    }
+
+    const [users] = await pool.execute(
+      `
+        SELECT
+          id,
+          email,
+          username,
+          password_hash
+        FROM users
+        WHERE username = ?
+        LIMIT 1
+      `,
+      [username]
+    );
+
+    if (users.length === 0) {
+      return res.status(401).json({
+        success: false,
+        message: "Invalid username or password",
+      });
+    }
+
+    const user = users[0];
+
+    const passwordMatches = await bcrypt.compare(
+      password,
+      user.password_hash
+    );
+
+    if (!passwordMatches) {
+      return res.status(401).json({
+        success: false,
+        message: "Invalid username or password",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "Login successful",
+      user: {
+        id: user.id,
+        email: user.email,
+        username: user.username,
+      },
+    });
+  } catch (error) {
+    console.error("Login error:", error);
+
+    return res.status(500).json({
+      success: false,
+      message: "Unable to log in",
+    });
+  }
+}
+
 module.exports = {
   registerUser,
+  loginUser,
 };
