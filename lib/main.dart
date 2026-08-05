@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mycotrack/screens/results/result_details_screen.dart';
 import 'theme/app_theme.dart';
 import 'screens/history/history_screen.dart';
+import 'screens/welcome/welcome_screen.dart';
 import 'screens/results/result_details_screen.dart';
 import 'screens/results/live_result_screen.dart';
 import 'screens/auth/forgot_password_screen.dart';
@@ -24,7 +25,7 @@ class MycoTrack extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: "MycoTrack",
       theme: AppTheme.lightTheme,
-      home: const HistoryScreen(),
+      home: const WelcomeScreen(),
     );
   }
 }
