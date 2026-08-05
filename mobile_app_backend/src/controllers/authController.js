@@ -135,7 +135,7 @@ async function registerUser(req, res) {
   }
 }
 
-//Login Control
+//login control
 async function loginUser(req, res) {
   try {
     const username =
@@ -283,24 +283,23 @@ async function resetPasswordDirectly(req, res) {
     ) {
       return res.status(400).json({
         success: false,
-        message:
-          "User, email, and new password are required",
+        message: "User, email, and password are required",
       });
     }
 
     if (newPassword.length < 8) {
       return res.status(400).json({
         success: false,
-        message:
-          "Password must contain at least 8 characters",
+        message: "Password must contain at least 8 characters",
       });
     }
 
     const [users] = await pool.execute(
       `
-        SELECT id
+        SELECT id, email, username
         FROM users
-        WHERE id = ? AND LOWER(email) = ?
+        WHERE id = ?
+          AND LOWER(email) = ?
         LIMIT 1
       `,
       [userId, email]
@@ -318,25 +317,34 @@ async function resetPasswordDirectly(req, res) {
       12
     );
 
-    await pool.execute(
+    const [updateResult] = await pool.execute(
       `
         UPDATE users
         SET password_hash = ?
         WHERE id = ?
+          AND LOWER(email) = ?
       `,
-      [passwordHash, userId]
+      [passwordHash, userId, email]
     );
+
+    if (updateResult.affectedRows !== 1) {
+      return res.status(500).json({
+        success: false,
+        message: "Password was not updated",
+      });
+    }
 
     return res.status(200).json({
       success: true,
-      message:
-        "Password changed successfully. You can now log in.",
+      message: "Password changed successfully",
+      user: {
+        id: users[0].id,
+        email: users[0].email,
+        username: users[0].username,
+      },
     });
   } catch (error) {
-    console.error(
-      "Direct password reset error:",
-      error
-    );
+    console.error("Password reset error:", error);
 
     return res.status(500).json({
       success: false,
