@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mycotrack/screens/capture_skin/capture_skin_screen.dart';
+import 'package:mycotrack/screens/upload_existing_image/upload_existing_image_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -9,9 +11,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: const HomeScreen(),
+      home: HomeScreen(),
     );
   }
 }
@@ -24,7 +26,6 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       body: Stack(
         children: [
-
           // Background Image
           Positioned.fill(
             child: Image.asset(
@@ -43,7 +44,6 @@ class HomeScreen extends StatelessWidget {
           SafeArea(
             child: Column(
               children: [
-
                 // Header
                 Container(
                   height: 90,
@@ -77,31 +77,54 @@ class HomeScreen extends StatelessWidget {
                       alignment: Alignment.topLeft,
                       child: Column(
                         children: [
-
                           menuButton(
+                            context,
                             Icons.image_outlined,
                             "Upload Existing\nImage",
+                                () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                  const UploadExistingImageScreen(),
+                                ),
+                              );
+                            },
                           ),
 
                           const SizedBox(height: 18),
 
                           menuButton(
+                            context,
                             Icons.camera_alt_outlined,
                             "Capture Skin\nImage",
+                                () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                  const CaptureSkinScreen(),
+                                ),
+                              );
+                            },
                           ),
 
                           const SizedBox(height: 18),
 
                           menuButton(
+                            context,
                             Icons.remove_red_eye_outlined,
                             "View Past\nResult",
+                                () {},
                           ),
 
                           const SizedBox(height: 18),
 
                           menuButton(
+                            context,
                             Icons.person_outline,
                             "Profile",
+                                () {},
                           ),
                         ],
                       ),
@@ -116,39 +139,46 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget menuButton(IconData icon, String title) {
-    return Column(
-      children: [
-
-        Container(
-          width: 140,
-          height: 140,
-          decoration: BoxDecoration(
-            color: const Color(0xff8B6456),
-            borderRadius: BorderRadius.circular(22),
-          ),
-          child: Icon(
-            icon,
-            color: Colors.white,
-            size: 70,
-          ),
-        ),
-
-        const SizedBox(height: 8),
-
-        SizedBox(
-          width: 150,
-          child: Text(
-            title,
-            textAlign: TextAlign.center,
-            style: const TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-              color: Colors.black87,
+  Widget menuButton(
+      BuildContext context,
+      IconData icon,
+      String title,
+      VoidCallback onTap,
+      ) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Column(
+        children: [
+          Container(
+            width: 140,
+            height: 140,
+            decoration: BoxDecoration(
+              color: const Color(0xff8B6456),
+              borderRadius: BorderRadius.circular(22),
+            ),
+            child: Icon(
+              icon,
+              color: Colors.white,
+              size: 70,
             ),
           ),
-        ),
-      ],
+
+          const SizedBox(height: 8),
+
+          SizedBox(
+            width: 150,
+            child: Text(
+              title,
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Colors.black87,
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
