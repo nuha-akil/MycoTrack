@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import '../home/home_screen.dart';
+import '../auth/forgot_password_screen.dart';
+import '../new account/create_new_account_screen.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -63,7 +66,14 @@ class LoginScreen extends StatelessWidget {
                 Align(
                   alignment: Alignment.centerRight,
                   child: TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute<void>(
+                          builder: (context) => const ForgotPasswordScreen(),
+                        ),
+                      );
+                    },
                     child: const Text(
                       "Forget password",
                       style: TextStyle(
@@ -76,11 +86,19 @@ class LoginScreen extends StatelessWidget {
 
                 const SizedBox(height: 30),
 
+                //login button
                 SizedBox(
                   width: 220,
                   height: 55,
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute<void>(
+                          builder: (context) => const HomeScreen(),
+                        ),
+                      );
+                    },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFF8B6456),
                       shape: RoundedRectangleBorder(
@@ -100,6 +118,7 @@ class LoginScreen extends StatelessWidget {
 
                 const SizedBox(height: 20),
 
+                //cancel button
                 SizedBox(
                   width: 220,
                   height: 55,
@@ -137,7 +156,14 @@ class LoginScreen extends StatelessWidget {
                 const SizedBox(height: 10),
 
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute<void>(
+                        builder: (context) => const RegisterScreen(),
+                      ),
+                    );
+                  },
                   child: const Text(
                     "Create a new account",
                     style: TextStyle(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-
+import '../login/login_screen.dart';
+import '../new account/create_new_account_screen.dart';
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
 
@@ -59,7 +60,14 @@ class WelcomeScreen extends StatelessWidget {
                   width: 240,
                   height: 58,
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const LoginScreen(),
+                        ),
+                      );
+                    },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFFF8ECD4),
                       foregroundColor: const Color(0xFF5D4037),
@@ -84,7 +92,14 @@ class WelcomeScreen extends StatelessWidget {
                   width: 240,
                   height: 58,
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute<void>(
+                          builder: (context) => const RegisterScreen(),
+                        ),
+                      );
+                    },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFFF8ECD4),
                       foregroundColor: const Color(0xFF5D4037),
