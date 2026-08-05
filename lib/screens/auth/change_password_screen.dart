@@ -90,10 +90,12 @@ class _ChangePasswordScreenState
       Map<String, dynamic> responseData = {};
 
       if (response.body.isNotEmpty) {
-        final decoded = jsonDecode(response.body);
+        final decodedResponse =
+        jsonDecode(response.body);
 
-        if (decoded is Map<String, dynamic>) {
-          responseData = decoded;
+        if (decodedResponse
+        is Map<String, dynamic>) {
+          responseData = decodedResponse;
         }
       }
 
@@ -103,6 +105,9 @@ class _ChangePasswordScreenState
 
       if (response.statusCode == 200 &&
           responseData['success'] == true) {
+        passwordController.clear();
+        confirmPasswordController.clear();
+
         showMessage(
           responseData['message']?.toString() ??
               'Password changed successfully',
@@ -143,7 +148,8 @@ class _ChangePasswordScreenState
 
       if (mounted) {
         showMessage(
-          'Could not connect to the server',
+          'Could not connect to the server. '
+              'Check that the backend and MySQL are running.',
         );
       }
     } finally {
@@ -191,8 +197,9 @@ class _ChangePasswordScreenState
         ),
       ),
       suffixIcon: IconButton(
-        onPressed:
-        isLoading ? null : onVisibilityPressed,
+        onPressed: isLoading
+            ? null
+            : onVisibilityPressed,
         icon: Icon(
           hidden
               ? Icons.visibility_off_outlined
@@ -295,7 +302,8 @@ class _ChangePasswordScreenState
                   hidden: hidePassword,
                   onVisibilityPressed: () {
                     setState(() {
-                      hidePassword = !hidePassword;
+                      hidePassword =
+                      !hidePassword;
                     });
                   },
                 ),
@@ -390,7 +398,8 @@ class _ChangePasswordScreenState
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 20,
-                      fontWeight: FontWeight.bold,
+                      fontWeight:
+                      FontWeight.bold,
                     ),
                   ),
                 ),
