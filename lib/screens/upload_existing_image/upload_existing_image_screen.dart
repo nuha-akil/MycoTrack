@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+import '../results/live_result_screen.dart';
+import '../home/home_screen.dart';
+import 'upload_existing_image_screen.dart';
+
 class UploadExistingImageScreen extends StatelessWidget {
   const UploadExistingImageScreen({super.key});
 
@@ -24,7 +28,6 @@ class UploadExistingImageScreen extends StatelessWidget {
           padding: const EdgeInsets.all(24),
           child: Column(
             children: [
-
               const SizedBox(height: 20),
 
               // Upload Box
@@ -42,7 +45,6 @@ class UploadExistingImageScreen extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-
                     const Icon(
                       Icons.cloud_upload_outlined,
                       size: 70,
@@ -72,7 +74,9 @@ class UploadExistingImageScreen extends StatelessWidget {
                     const SizedBox(height: 18),
 
                     ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        // Add image picker code here later
+                      },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xFF8B6456),
                         minimumSize: const Size(180, 45),
@@ -94,15 +98,49 @@ class UploadExistingImageScreen extends StatelessWidget {
 
               const SizedBox(height: 60),
 
-              buildButton("Analyse Image"),
+              buildButton(
+                context,
+                "Analyse Image",
+                    () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const LiveResultScreen(),
+                    ),
+                  );
+                },
+              ),
 
               const SizedBox(height: 20),
 
-              buildButton("Change Image"),
+              buildButton(
+                context,
+                "Change Image",
+                    () {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                      const UploadExistingImageScreen(),
+                    ),
+                  );
+                },
+              ),
 
               const SizedBox(height: 20),
 
-              buildButton("Cancel"),
+              buildButton(
+                context,
+                "Cancel",
+                    () {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const HomeScreen(),
+                    ),
+                  );
+                },
+              ),
             ],
           ),
         ),
@@ -110,12 +148,16 @@ class UploadExistingImageScreen extends StatelessWidget {
     );
   }
 
-  Widget buildButton(String text) {
+  Widget buildButton(
+      BuildContext context,
+      String text,
+      VoidCallback onPressed,
+      ) {
     return SizedBox(
       width: double.infinity,
       height: 55,
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: onPressed,
         style: ElevatedButton.styleFrom(
           backgroundColor: const Color(0xFF8B6456),
           shape: RoundedRectangleBorder(

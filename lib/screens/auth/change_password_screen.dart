@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../Successful_messages/password_changed_successfully.dart';
 
 class ChangePasswordScreen extends StatefulWidget {
   const ChangePasswordScreen({super.key});
@@ -17,7 +18,6 @@ class _ChangePasswordScreenState
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFF5EBD5),
-
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(
@@ -26,7 +26,6 @@ class _ChangePasswordScreenState
           ),
           child: Column(
             children: [
-
               /// Back Button
               Align(
                 alignment: Alignment.centerLeft,
@@ -93,17 +92,15 @@ class _ChangePasswordScreenState
                   hintText: "Enter new password",
                   filled: true,
                   fillColor: Colors.white,
-
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
-
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
-                    borderSide:
-                    const BorderSide(color: Color(0xFFD8CFC8)),
+                    borderSide: const BorderSide(
+                      color: Color(0xFFD8CFC8),
+                    ),
                   ),
-
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
                     borderSide: const BorderSide(
@@ -111,7 +108,6 @@ class _ChangePasswordScreenState
                       width: 2,
                     ),
                   ),
-
                   suffixIcon: IconButton(
                     icon: Icon(
                       hidePassword
@@ -137,17 +133,15 @@ class _ChangePasswordScreenState
                   hintText: "Confirm new password",
                   filled: true,
                   fillColor: Colors.white,
-
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
-
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
-                    borderSide:
-                    const BorderSide(color: Color(0xFFD8CFC8)),
+                    borderSide: const BorderSide(
+                      color: Color(0xFFD8CFC8),
+                    ),
                   ),
-
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
                     borderSide: const BorderSide(
@@ -155,7 +149,6 @@ class _ChangePasswordScreenState
                       width: 2,
                     ),
                   ),
-
                   suffixIcon: IconButton(
                     icon: Icon(
                       hideConfirmPassword
@@ -180,15 +173,21 @@ class _ChangePasswordScreenState
                 width: double.infinity,
                 height: 58,
                 child: ElevatedButton(
-                  onPressed: () {},
-
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                        const PasswordChangedSuccessScreen(),
+                      ),
+                    );
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF7B5444),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30),
                     ),
                   ),
-
                   child: const Text(
                     "Save Password",
                     style: TextStyle(
@@ -210,14 +209,12 @@ class _ChangePasswordScreenState
                   onPressed: () {
                     Navigator.pop(context);
                   },
-
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF7B5444),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30),
                     ),
                   ),
-
                   child: const Text(
                     "Cancel",
                     style: TextStyle(
