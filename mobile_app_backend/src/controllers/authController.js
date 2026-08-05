@@ -209,7 +209,145 @@ async function loginUser(req, res) {
   }
 }
 
+async function checkResetEmail(req, res) {
+  try {
+    const email =
+      typeof req.body.email === "string"
+        ? req.body.email.trim().toLowerCase()
+        : "";
+
+    if (!email) {
+      return res.status(400).json({
+        success: false,
+        message: "Email address is required",
+      });
+    }
+
+    const [users] = await pool.execute(
+      `
+        SELECT id, email, username
+        FROM users
+        WHERE LOWER(email) = ?
+        LIMIT 1
+      `,
+      [email]
+    );
+
+    if (users.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "Email address does not exist",
+      });
+    }
+
+    const user = users[0];
+
+    return res.status(200).json({
+      success: true,
+      message: "Email address verified",
+      user: {
+        id: user.id,
+        email: user.email,
+        username: user.username,
+      },
+    });
+  } catch (error) {
+    console.error("Email check error:", error);
+
+    return res.status(500).json({
+      success: false,
+      message: "Unable to check the email address",
+    });
+  }
+}
+
+async function resetPasswordDirectly(req, res) {
+  try {
+    const userId = Number(req.body.userId);
+
+    const email =
+      typeof req.body.email === "string"
+        ? req.body.email.trim().toLowerCase()
+        : "";
+
+    const newPassword =
+      typeof req.body.newPassword === "string"
+        ? req.body.newPassword
+        : "";
+
+    if (
+      !Number.isInteger(userId) ||
+      userId <= 0 ||
+      !email ||
+      !newPassword
+    ) {
+      return res.status(400).json({
+        success: false,
+        message:
+          "User, email, and new password are required",
+      });
+    }
+
+    if (newPassword.length < 8) {
+      return res.status(400).json({
+        success: false,
+        message:
+          "Password must contain at least 8 characters",
+      });
+    }
+
+    const [users] = await pool.execute(
+      `
+        SELECT id
+        FROM users
+        WHERE id = ? AND LOWER(email) = ?
+        LIMIT 1
+      `,
+      [userId, email]
+    );
+
+    if (users.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "User account was not found",
+      });
+    }
+
+    const passwordHash = await bcrypt.hash(
+      newPassword,
+      12
+    );
+
+    await pool.execute(
+      `
+        UPDATE users
+        SET password_hash = ?
+        WHERE id = ?
+      `,
+      [passwordHash, userId]
+    );
+
+    return res.status(200).json({
+      success: true,
+      message:
+        "Password changed successfully. You can now log in.",
+    });
+  } catch (error) {
+    console.error(
+      "Direct password reset error:",
+      error
+    );
+
+    return res.status(500).json({
+      success: false,
+      message: "Unable to change the password",
+    });
+  }
+}
+
 module.exports = {
   registerUser,
   loginUser,
+  checkResetEmail,
+  resetPasswordDirectly,
 };
