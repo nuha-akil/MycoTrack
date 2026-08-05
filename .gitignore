@@ -43,3 +43,8 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+#database environment
+node_modules/
+.env
+npm-debug.log*
