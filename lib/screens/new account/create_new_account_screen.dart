@@ -34,6 +34,30 @@ class RegisterScreen extends StatelessWidget {
                 // Username
                 TextField(
                   decoration: InputDecoration(
+                    hintText: "Enter your email address",
+                    filled: true,
+                    fillColor: Colors.white,
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 20,
+                      vertical: 18,
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(2),
+                      borderSide:
+                      const BorderSide(color: Colors.grey, width: 1),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(2),
+                      borderSide:
+                      const BorderSide(color: brown, width: 2),
+                    ),
+                  ),
+                ),
+
+                const SizedBox(height: 25),
+                // Username
+                TextField(
+                  decoration: InputDecoration(
                     hintText: "Enter your username",
                     filled: true,
                     fillColor: Colors.white,
