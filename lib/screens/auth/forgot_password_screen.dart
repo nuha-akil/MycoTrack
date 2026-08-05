@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mycotrack/screens/login/login_screen.dart';
 
 class ForgotPasswordScreen extends StatelessWidget {
   const ForgotPasswordScreen({super.key});
@@ -7,15 +8,12 @@ class ForgotPasswordScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFF4E8D2),
-
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
             padding: const EdgeInsets.symmetric(horizontal: 24),
-
             child: Column(
               children: [
-
                 const SizedBox(height: 80),
 
                 const Text(
@@ -45,19 +43,15 @@ class ForgotPasswordScreen extends StatelessWidget {
                   keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
                     hintText: "Enter your email",
-
                     filled: true,
                     fillColor: Colors.white,
-
                     contentPadding: const EdgeInsets.symmetric(
                       horizontal: 18,
                       vertical: 18,
                     ),
-
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
-
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
                       borderSide: const BorderSide(
@@ -65,7 +59,6 @@ class ForgotPasswordScreen extends StatelessWidget {
                         width: 1,
                       ),
                     ),
-
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
                       borderSide: const BorderSide(
@@ -81,17 +74,16 @@ class ForgotPasswordScreen extends StatelessWidget {
                 SizedBox(
                   width: 250,
                   height: 55,
-
                   child: ElevatedButton(
-                    onPressed: () {},
-
+                    onPressed: () {
+                      // TODO: Send reset link
+                    },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFF7D5546),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30),
                       ),
                     ),
-
                     child: const Text(
                       "Send Reset Link",
                       style: TextStyle(
@@ -107,9 +99,13 @@ class ForgotPasswordScreen extends StatelessWidget {
 
                 TextButton(
                   onPressed: () {
-                    Navigator.pop(context);
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const LoginScreen(),
+                      ),
+                    );
                   },
-
                   child: const Text(
                     "Back to Login",
                     style: TextStyle(
