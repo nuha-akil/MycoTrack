@@ -1,27 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:mycotrack/screens/capture_skin/capture_skin_screen.dart';
-import 'package:mycotrack/screens/upload_existing_image/upload_existing_image_screen.dart';
-import 'package:mycotrack/screens/history/view_past_results_screen.dart';
-import 'package:mycotrack/screens/profile/profile_screen.dart';
-
-void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: HomeScreen(),
-    );
-  }
-}
+import 'package:camera/camera.dart';
+import '../capture_skin/capture_skin_screen.dart';
+import '../upload_existing_image/upload_existing_image_screen.dart';
+import '../history/view_past_results_screen.dart';
+import '../profile/profile_screen.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+  final List<CameraDescription> cameras;
+  
+  const HomeScreen({super.key, required this.cameras});
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +26,7 @@ class HomeScreen extends StatelessWidget {
           // White Overlay
           Positioned.fill(
             child: Container(
-              color: Colors.white.withValues(alpha: 0.18),
+              color: Colors.white.withOpacity(0.18),
             ),
           ),
 
@@ -73,11 +60,12 @@ class HomeScreen extends StatelessWidget {
                 const SizedBox(height: 30),
 
                 Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 20),
+                  child: SingleChildScrollView(
+                    padding: const EdgeInsets.only(left: 20, bottom: 20),
                     child: Align(
                       alignment: Alignment.topLeft,
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           // Upload Existing Image
                           menuButton(
@@ -107,7 +95,7 @@ class HomeScreen extends StatelessWidget {
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) =>
-                                  const CaptureSkinScreen(),
+                                  CaptureSkinScreen(cameras: cameras),
                                 ),
                               );
                             },
@@ -170,6 +158,7 @@ class HomeScreen extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           Container(
             width: 140,
